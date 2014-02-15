@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <title>Lista do João</title>
+
+    </h:head>
+    <div class="wrapper">
+        <div class="header">     
+            <div class="shell">
+                <div class="header-top">
+                    <h1 id="logo"><a href="#">Lista de Compras</a></h1>
+                    <nav id="navigation">
+                        <ul>
+                            <li><h:link outcome="index" value="Listas"/></li>                          
+                            <li><h:link outcome="listaProduto" value="Produtos"/></li>
+                        </ul>
+                    </nav>
+                    <div class="cl">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- conteudo -->
+            <div class="shell">
+                <div class="main">
+                    <div class="container">
+                        <ui:insert name="conteudo"></ui:insert>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+
+        <div id="footer">
+            <div class="shell">
+                <div class="footer-bottom">
+                    <div class="footer-nav">
+                        <ul> 
+                            <li><h:link outcome="index" value="Listas"/></li>
+                            <li><h:link outcome="listaProduto" value="Produtos"/></li>     
+                        </ul>
+                    </div>
+                    <p class="copy">Copyright &copy; 2014<span>|</span> Fernando Pavan</p>
+                    <div class="cl">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

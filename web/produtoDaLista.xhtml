@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"    
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="template.xhtml">
+
+        <ui:define name="conteudo">
+            <h:form>
+                <h:inputHidden id="idLista" value="#{produtoListaController.lista.id}"/>
+
+                <h:form>
+                    
+                    <br/>
+                    <div class="field">
+                    <h:outputLabel value="Produto"/>
+                    <p:selectOneMenu value="#{produtoListaController.produto.id}" 
+                                     filter="true" >  
+                        <f:selectItems value="#{produtoController.listaProduto}"
+                                       var="idProduto"
+                                       itemLabel="#{idProduto.descricao} - R$ #{idProduto.preco}" 
+                                       itemValue="#{idProduto.id}"/> 
+                    </p:selectOneMenu>
+                    </div>
+                    
+                    
+                    <div class="field">
+                    <h:outputLabel value="Quantidade"/>
+                    <h:inputText class="input" value="#{produtoListaController.produtoLista.qtd}"
+                                 label="Quantidade" required="true" 
+                                 requiredMessage="Informe a quantidade do item"/>
+                    </div>
+                    
+                    <h:commandButton class="botao" value="Add Produto" action="#{produtoListaController.salvar()}"/>
+                    <f:param name="idLista" value="#{produtoListaController.lista.id}"/>
+
+                    <br/>
+                    <br/>
+                    
+                </h:form>
+                <p:messages/>
+            </h:form>
+
+            <h:form id="form">  
+                <p:growl id="messages" showDetail="true"/> 
+                <p:dataTable id="produtoLista" 
+                             value="#{produtoListaController.getListaProdutoLista(produtoListaController.lista.id)}" 
+                             var="produtoLista" 
+                             editable="true">     
+                    <f:facet name="header">  
+                        #{produtoListaController.lista.nome}
+                    </f:facet>  
+
+                    <p:ajax event="rowEdit" listener="#{produtoController.atualiza()}" update=":form:messages" />  
+                    <p:ajax event="rowEditCancel" update=":form:messages" />  
+
+                    <p:column headerText="Descrição" style="width:20%">  
+                        <h:outputText value="#{produtoLista.produto.descricao}" /> 
+                    </p:column>  
+
+                    <p:column headerText="Quantidade" style="width:20%">  
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{produtoLista.qtd}" />  
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{produtoLista.qtd}" style="width:100%" label="qtde"/>  
+                            </f:facet>  
+                        </p:cellEditor>  
+                    </p:column>  
+
+                    <p:column headerText="Preço" style="width:20%">                 
+                        <h:outputText value="#{produtoLista.produto.preco}" />                            
+                    </p:column>  
+
+                    <p:column headerText="Total" style="width:20%">  
+                        <h:outputText value="#{produtoLista.produto.preco * produtoLista.qtd}" />                            
+                    </p:column>  
+
+                    <p:column headerText="Editar" style="width:4%"
+                              footerText="Total :">  
+                        <p:rowEditor />  
+                    </p:column>  
+
+                    <p:column headerText="Excluir" style="width:4%" 
+                              footerText="#{listaController.getValorTotal(produtoListaController.lista.id) + 0}">                        
+                        <p:commandButton action="#{produtoListaController.removerProdutoLista(produtoLista)}" 
+                                         icon="ui-icon-close"
+                                         update="produtoLista">
+                            <f:param name="idLista" 
+                                     value="#{listaController.lista.id}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>               
+            </h:form> 
+
+        </ui:define>
+    </ui:composition>
+</html>
+
+

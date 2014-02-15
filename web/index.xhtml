@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"    
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="conteudo">
+
+            <h:link outcome="cadastroLista" value="Nova Lista" styleClass="botao"/>            
+
+            <h:form id="form">  
+
+                <p:growl id="messages" showDetail="true"/>  
+                <p:dataTable var="listar" value="#{listaController.buscarTodas}" id="lista" editable="true">  
+
+                    <f:facet name="header">  
+                        Listas  
+                    </f:facet>  
+
+                    <p:ajax event="rowEdit" listener="#{listaController.atualiza()}" update=":form:messages" />  
+                    <p:ajax event="rowEditCancel" update=":form:messages" />  
+
+                    <p:column headerText="Id" style="width:4%">  
+                        <h:outputText value="#{listar.id}" />                            
+                    </p:column>  
+
+                    <p:column headerText="Nome" style="width:20%">  
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{listar.nome}" />  
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{listar.nome}" style="width:100%" label="Nome"/>  
+                            </f:facet>  
+                        </p:cellEditor>  
+                    </p:column>  
+
+                    <p:column headerText="Data" style="width:20%">  
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{listar.dataCadastro}"> 
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{listar.dataCadastro}" style="width:100%" label="Data">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:inputText>
+                            </f:facet>  
+                        </p:cellEditor>  
+                    </p:column>  
+
+                    <p:column headerText="Produtos" style="width:6%">                             
+                        <h:link outcome="produtoDaLista" value="Ver">
+                            <f:param name="idLista" value="#{listar.id}"/>
+                        </h:link>
+                    </p:column>  
+
+                    <p:column headerText="Editar" style="width:4%">  
+                        <p:rowEditor />  
+                    </p:column>  
+
+                    <p:column headerText="Excluir" style="width:4%">
+                        <p:commandButton action="#{listaController.removerLista(listar)}" 
+                                         icon="ui-icon-close"
+                                         update="lista"/>
+                    </p:column>  
+
+                </p:dataTable>  
+            </h:form> 
+            <h:messages />
+
+        </ui:define>
+    </ui:composition>
+</html>
+
