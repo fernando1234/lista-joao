@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package br.com.entities;
 
 import java.io.Serializable;
@@ -69,8 +63,14 @@ public class ProdutoLista implements Serializable{
 
     @Override
     public String toString() {
-        return "ProdutoLista{idProdutoLista=" + idProdutoLista + ", idLista=" + lista.getId() + ", descricaoLista=" + lista.getNome()
-                + ", idProduto=" + produto.getId() + ", descricao=" + produto.getDescricao()
-                + ", preco=" + produto.getPreco()+ ", qtd=" + qtd + ", vlrTotal=" + qtd * produto.getPreco()+ "}\n";
+        return "ProdutoLista{idProdutoLista=" + idProdutoLista 
+                + ", idLista=" + lista.getId() 
+                + ", nome=" + lista.getNome()
+                + ", idProduto=" + produto.getId() 
+                + ", descricao=" + produto.getDescricao()
+                + ", preco=" + produto.getPreco()
+                + ", qtd=" + qtd 
+                + ", valorTotal=" + qtd * produto.getPreco()
+                + "}";
     }
 }

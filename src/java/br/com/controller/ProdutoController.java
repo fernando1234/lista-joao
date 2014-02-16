@@ -2,6 +2,7 @@ package br.com.controller;
 
 import br.com.entities.Produto;
 import br.com.service.ProdutoService;
+import java.io.InputStream;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
+import sun.misc.IOUtils;
 
 /**
  *
@@ -39,34 +41,6 @@ public class ProdutoController {
         this.idProduto = idProduto;
     }
 
-    @PostConstruct
-    public void atualiza() {
-        if (idProduto != null) {
-            EntityManager manager = getEntityManager();
-            this.produto = new ProdutoService(manager).buscarPorId(idProduto);
-        }
-    }
-
-    public String salvar() {
-        EntityManager manager = getEntityManager();
-
-        new ProdutoService(manager).salvar(produto);
-
-        return "listaProduto?faces-redirect=true";
-    }
-
-    public List<Produto> getListaProduto() {
-        EntityManager entityManager = getEntityManager();
-
-        return new ProdutoService(entityManager).BuscarTodos();
-    }
-
-    public void removerProduto(Produto produto) {
-        EntityManager entityManager = getEntityManager();
-
-        new ProdutoService(entityManager).remover(produto);
-    }
-
     private EntityManager getEntityManager() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
@@ -76,4 +50,30 @@ public class ProdutoController {
         return manager;
     }
 
+    public List<Produto> getListaProduto() {
+        EntityManager entityManager = getEntityManager();
+
+        return new ProdutoService(entityManager).BuscarTodos();
+    }
+
+    public String salvar() {
+        EntityManager manager = getEntityManager();
+        new ProdutoService(manager).salvar(produto);
+
+        return "listaProduto?faces-redirect=true";
+    }
+
+    @PostConstruct
+    public void atualiza() {
+        if (idProduto != null) {
+            EntityManager manager = getEntityManager();
+            this.produto = new ProdutoService(manager).buscarPorId(idProduto);
+        }
+    }
+
+    public void removerProduto(Produto produto) {
+        EntityManager entityManager = getEntityManager();
+
+        new ProdutoService(entityManager).remover(produto);
+    }
 }

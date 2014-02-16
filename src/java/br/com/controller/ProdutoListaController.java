@@ -48,6 +48,36 @@ public class ProdutoListaController {
         this.lista = lista;
     }
 
+    private EntityManager getEntityManager() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+        EntityManager manager = (EntityManager) request.getAttribute("EntityManager");
+
+        return manager;
+    }
+
+    public List<ProdutoLista> getListaProdutoLista(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+        return new ProdutoListaService(entityManager).buscar(idLista);
+    }
+
+    public String salvar() {
+        if (produto.getId() != null) {
+            this.produtoLista.setProduto(produto);
+        }
+
+        if (lista.getId() != null) {
+            this.produtoLista.setLista(lista);
+        }
+
+        EntityManager manager = getEntityManager();
+
+        new ProdutoListaService(manager).salvar(produtoLista);
+
+        return "produtoDaLista?faces-redirect=true&idLista=" + produtoLista.getLista().getId();
+    }
+
     @PostConstruct
     public void atualiza() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -65,40 +95,8 @@ public class ProdutoListaController {
         }
     }
 
-    public String salvar() {
-           if (produto.getId()!= null) {
-            this.produtoLista.setProduto(produto);
-        }
-
-        if (lista.getId() != null) {
-            this.produtoLista.setLista(lista);
-        }
-        
-        EntityManager manager = getEntityManager();
-
-        new ProdutoListaService(manager).salvar(produtoLista);
-
-        return "produtoDaLista?faces-redirect=true&idLista=" + produtoLista.getLista().getId();
-    }
-
-    public List<ProdutoLista> getListaProdutoLista(Long idLista) {
-        EntityManager entityManager = getEntityManager();
-
-        return new ProdutoListaService(entityManager).buscar(idLista);
-    }
-
     public void removerProdutoLista(ProdutoLista produtoLista) {
         EntityManager entityManager = getEntityManager();
-
         new ProdutoListaService(entityManager).remove(produtoLista);
-    }
-
-    private EntityManager getEntityManager() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext ec = fc.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-        EntityManager manager = (EntityManager) request.getAttribute("EntityManager");
-
-        return manager;
     }
 }

@@ -16,6 +16,15 @@ public class ProdutoListaService {
         this.entity = entity;
     }
 
+    public List<ProdutoLista> buscar(Long idLista) {
+        String sql = "FROM ProdutoLista AS PL WHERE PL.lista.id = " + String.valueOf(idLista);
+        return entity.createQuery(sql, ProdutoLista.class).getResultList();
+    }
+
+    public ProdutoLista BuscarPorId(Long idProdutoLista) {
+        return entity.find(ProdutoLista.class, idProdutoLista);
+    }
+
     public void salvar(ProdutoLista produtoLista) {
         if (produtoLista.getIdProdutoLista() == null) {
             entity.persist(produtoLista);
@@ -27,14 +36,5 @@ public class ProdutoListaService {
     public void remove(ProdutoLista produtoLista) {
         produtoLista = entity.find(ProdutoLista.class, produtoLista.getIdProdutoLista());
         entity.remove(produtoLista);
-    }
-
-    public ProdutoLista BuscarPorId(Long idProdutoLista) {
-        return entity.find(ProdutoLista.class, idProdutoLista);
-    }
-
-    public List<ProdutoLista> buscar(Long idLista) {
-        String sql = "FROM ProdutoLista AS PL WHERE PL.lista.id = " + String.valueOf(idLista);
-        return entity.createQuery(sql, ProdutoLista.class).getResultList();
     }
 }

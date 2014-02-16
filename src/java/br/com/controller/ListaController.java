@@ -39,40 +39,6 @@ public class ListaController {
         this.idLista = idLista;
     }
 
-    @PostConstruct
-    public void atualiza() {
-        if (idLista != null) {
-            EntityManager manager = getEntityManager();
-            this.lista = new ListaService(manager).BuscarPorId(idLista);
-        }
-    }
-
-    public String salvar() {
-        EntityManager manager = getEntityManager();
-
-        new ListaService(manager).salvar(lista);
-
-        return "index?faces-redirect=true";
-    }
-
-    public List<Lista> getBuscarTodas() {
-        EntityManager entityManager = getEntityManager();
-
-        return new ListaService(entityManager).BuscarTodas();
-    }
-
-    public void removerLista(Lista lista) {
-        EntityManager entityManager = getEntityManager();
-
-        new ListaService(entityManager).remover(lista);
-    }
-
-    public Double getValorTotal(Long idLista) {
-        EntityManager entityManager = getEntityManager();
-
-        return new ListaService(entityManager).valorTotal(idLista);
-    }
-
     private EntityManager getEntityManager() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
@@ -82,4 +48,33 @@ public class ListaController {
         return manager;
     }
 
+    public List<Lista> getBuscarTodas() {
+        EntityManager entityManager = getEntityManager();
+        return new ListaService(entityManager).BuscarTodas();
+    }
+
+    public String salvar() {
+        EntityManager manager = getEntityManager();
+        new ListaService(manager).salvar(lista);
+
+        return "index?faces-redirect=true";
+    }
+
+    @PostConstruct
+    public void atualiza() {
+        if (idLista != null) {
+            EntityManager manager = getEntityManager();
+            this.lista = new ListaService(manager).BuscarPorId(idLista);
+        }
+    }
+
+    public void removerLista(Lista lista) {
+        EntityManager entityManager = getEntityManager();
+        new ListaService(entityManager).remover(lista);
+    }
+
+    public Double getValorTotal(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+        return new ListaService(entityManager).valorTotal(idLista);
+    }
 }

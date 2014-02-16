@@ -16,23 +16,6 @@ public class ListaService {
         this.entity = entity;
     }
 
-    public void salvar(Lista lista) {
-        if (lista.getId() == null) {
-            entity.persist(lista);
-        } else {
-            entity.merge(lista);
-        }
-    }
-
-    public void remover(Lista lista) {
-        lista = entity.find(Lista.class, lista.getId());
-        entity.remove(lista);
-    }
-
-    public Lista BuscarPorId(Long id) {
-        return entity.find(Lista.class, id);
-    }
-
     public List<Lista> BuscarTodas() {
         return entity.createQuery("FROM Lista l", Lista.class).getResultList();
     }
@@ -45,4 +28,20 @@ public class ListaService {
         return (Double) (entity.createQuery(sql).setParameter("id", id).getSingleResult());
     }
 
+    public Lista BuscarPorId(Long id) {
+        return entity.find(Lista.class, id);
+    }
+
+    public void remover(Lista lista) {
+        lista = entity.find(Lista.class, lista.getId());
+        entity.remove(lista);
+    }
+
+    public void salvar(Lista lista) {
+        if (lista.getId() == null) {
+            entity.persist(lista);
+        } else {
+            entity.merge(lista);
+        }
+    }
 }

@@ -16,12 +16,12 @@ public class ProdutoService {
         this.entity = entity;
     }
 
-    public void salvar(Produto produto) {
-        if (produto.getId() == null) {
-            entity.persist(produto);
-        } else {
-            entity.merge(produto);
-        }
+    public List<Produto> BuscarTodos() {
+        return entity.createQuery("FROM Produto p", Produto.class).getResultList();
+    }
+
+    public Produto buscarPorId(Long id) {
+        return entity.find(Produto.class, id);
     }
 
     public void remover(Produto produto) {
@@ -29,11 +29,11 @@ public class ProdutoService {
         entity.remove(produto);
     }
 
-    public Produto buscarPorId(Long id) {
-        return entity.find(Produto.class, id);
-    }
-
-    public List<Produto> BuscarTodos() {
-        return entity.createQuery("FROM Produto p", Produto.class).getResultList();
-    }
+    public void salvar(Produto produto) {
+        if (produto.getId() == null) {
+            entity.persist(produto);
+        } else {
+            entity.merge(produto);
+        }
+    }    
 }
