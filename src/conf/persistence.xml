@@ -8,10 +8,10 @@
     <class>br.com.entities.ProdutoLista</class>
    <!--   <mapping-file>br.com.entities.Lista-orm.xml</mapping-file>-->
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jbossfer"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/joao"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="5yeXr5dgM2Cn"/>
-      <property name="javax.persistence.jdbc.user" value="adminm3cM1Ks"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
     </properties>
   </persistence-unit>
